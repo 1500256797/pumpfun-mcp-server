@@ -6,9 +6,17 @@ import {
 	createBuyTxHandler,
 	createSellTxHandler,
 } from './handlers'
+import { config } from './config'
+
+try {
+	config.validate()
+} catch (error) {
+	console.error('Configuration error:', error)
+	process.exit(1)
+}
 
 const app = express()
-const port = 8080
+const port = config.get('port')
 
 const router: ExpressRouter = express.Router()
 

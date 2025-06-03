@@ -1,10 +1,10 @@
 import { bs58 } from '@coral-xyz/anchor/dist/cjs/utils/bytes'
 import { Connection, LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js'
-import { HELIUS_RPC_URL } from '../config'
 import { buildVersionedTx, DEFAULT_DECIMALS, PumpFunSDK } from '../pumpfun'
 import type { RequestHandler } from 'express'
 import { isValidSolanaAddress } from '../util'
 import { AnchorProvider } from '@coral-xyz/anchor'
+import { config } from '../config'
 
 export const createBuyTxHandler: RequestHandler = async (req, res, next) => {
 	try {
@@ -39,7 +39,7 @@ export const createBuyTxHandler: RequestHandler = async (req, res, next) => {
 		const mint = new PublicKey(payload.mint)
 		const buyAmountHumanReadableSol = payload.buyAmountHumanReadableSol
 
-		let connection = new Connection(HELIUS_RPC_URL)
+		let connection = new Connection(config.get('heliusRpcUrl'))
 		const provider = new AnchorProvider(
 			connection,
 			{
@@ -118,7 +118,7 @@ export const createSellTxHandler: RequestHandler = async (req, res, next) => {
 			payload.sellAmountHumanReadableToken
 		const slippage = payload.slippage
 
-		let connection = new Connection(HELIUS_RPC_URL)
+		let connection = new Connection(config.get('heliusRpcUrl'))
 		const provider = new AnchorProvider(
 			connection,
 			{

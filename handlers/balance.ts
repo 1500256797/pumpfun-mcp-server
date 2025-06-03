@@ -1,8 +1,8 @@
 import type { RequestHandler } from 'express'
 import { isValidSolanaAddress } from '../util'
 import { Connection, LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js'
-import { HELIUS_RPC_URL } from '../config'
 import { getAssociatedTokenAddressSync } from '@solana/spl-token'
+import { config } from '../config'
 
 export const solBalanceHandler: RequestHandler = async (req, res, next) => {
 	try {
@@ -21,7 +21,7 @@ export const solBalanceHandler: RequestHandler = async (req, res, next) => {
 			return
 		}
 
-		const connection = new Connection(HELIUS_RPC_URL)
+		const connection = new Connection(config.get('heliusRpcUrl'))
 
 		try {
 			const pubKey = new PublicKey(payload.userAddress)
@@ -65,7 +65,7 @@ export const splBalanceHandler: RequestHandler = async (req, res, next) => {
 			return
 		}
 
-		const connection = new Connection(HELIUS_RPC_URL)
+		const connection = new Connection(config.get('heliusRpcUrl'))
 
 		try {
 			const userPubKey = new PublicKey(payload.userAddress)
