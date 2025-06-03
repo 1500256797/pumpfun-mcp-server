@@ -1,3 +1,4 @@
+import { bs58 } from '@coral-xyz/anchor/dist/cjs/utils/bytes'
 import { PublicKey } from '@solana/web3.js'
 import { sha256 } from 'js-sha256'
 
@@ -16,6 +17,15 @@ export function getDiscriminator(name: string) {
 export const isValidSolanaAddress = (address: string) => {
 	try {
 		new PublicKey(address)
+		return true
+	} catch (e) {
+		return false
+	}
+}
+
+export const isValidSolanaTxId = (txid: string) => {
+	try {
+		bs58.decode(txid)
 		return true
 	} catch (e) {
 		return false

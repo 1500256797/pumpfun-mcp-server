@@ -7,6 +7,7 @@ import {
 	createSellTxHandler,
 } from './handlers'
 import { config } from './config'
+import { txStatusHandler } from './handlers/status'
 
 try {
 	config.validate()
@@ -24,7 +25,7 @@ router.post('/balance/sol', solBalanceHandler)
 router.post('/balance/spl', splBalanceHandler)
 router.post('/pumpfun/buy', createBuyTxHandler)
 router.post('/pumpfun/sell', createSellTxHandler)
-
+router.post('/sol/txid', txStatusHandler)
 app.use(express.json())
 app.use(router)
 
